@@ -1,108 +1,119 @@
-**Role-Based Access Control (RBAC) System**
-**Project Overview**
-This project implements a Role-Based Access Control (RBAC) system that manages user authentication and authorization based on roles. It ensures that users can securely register, log in, and access resources according to their roles. The system uses JWT (JSON Web Tokens) for session management and enforces role-based permissions.
+# Role-Based Access Control (RBAC) System
+
+## Project Overview
+
+This project implements a **Role-Based Access Control (RBAC)** system that manages user authentication and authorization based on roles. It ensures that users can securely register, log in, and access resources according to their roles. The system uses **JWT (JSON Web Tokens)** for session management and enforces role-based permissions.
 
 The project demonstrates core concepts of security including authentication, authorization, and role-based access control in modern web applications.
 
-**Features**
+## Features
 
-User Authentication:
-    Secure registration with password hashing (using bcrypt).
-    User login that generates a JWT token for session management.
-    User logout endpoint to invalidate the session.
-Authorization Based on Roles:
-    Users are assigned roles such as Admin, Moderator, and User.
-    Access to specific routes is restricted based on the user's role.
-    Only authorized users with the correct role can access or perform actions on certain resources.
-RBAC Implementation:
-    Admins can manage roles and assign roles to users.
-    Moderators and Users have restricted access based on their assigned permissions.
-Security Best Practices:
-    Passwords are hashed and stored securely using bcrypt.
-    JWTs are used for secure, token-based authentication.
-    Middleware checks ensure that only authenticated users with proper roles can access restricted resources.
-    
-Technologies Used
-**Backend**: Node.js, Express.js
-**Database**: MongoDB
-**Authentication**: JSON Web Tokens (JWT)
-**Password Hashing**: bcrypt.js
-**Environment Variables**: dotenv
-**Middleware**: Custom middleware for authentication (protect) and authorization (authorizeRoles)
+- **User Authentication**:
+  - Secure registration with password hashing (using `bcrypt`).
+  - User login that generates a JWT token for session management.
+  - User logout endpoint to invalidate the session.
 
+- **Authorization Based on Roles**:
+  - Users are assigned roles such as `Admin`, `Moderator`, and `User`.
+  - Access to specific routes is restricted based on the user's role.
+  - Only authorized users with the correct role can access or perform actions on certain resources.
 
+- **RBAC Implementation**:
+  - Admins can manage roles and assign roles to users.
+  - Moderators and Users have restricted access based on their assigned permissions.
 
-env code
+- **Security Best Practices**:
+  - Passwords are hashed and stored securely using `bcrypt`.
+  - JWTs are used for secure, token-based authentication.
+  - Middleware checks ensure that only authenticated users with proper roles can access restricted resources.
 
-PORT=5000
-MONGO_URI=mongodb+srv://undavallijahnavi354:Oz57Wr6NYa3NlYth@cluster0.ce229.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-JWT_SECRET=your_jwt_secret
+## Technologies Used
+
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Authentication**: JSON Web Tokens (JWT)
+- **Password Hashing**: bcrypt.js
+- **Environment Variables**: dotenv
+- **Middleware**: Custom middleware for authentication (`protect`) and authorization (`authorizeRoles`)
+
+PORT=5000 
+MONGO_URI=mongodb+srv://undavallijahnavi354:Oz57Wr6NYa3NlYth@cluster0.ce229.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0 
+JWT_SECRET=your_jwt_secret_key 
 JWT_EXPIRES=1h
-USERNAME=undavallijahnavi354
-password=Oz57Wr6NYa3NlYth
 
-4. Run the Application
-npm start
-The application will be running on http://localhost:5000.
+# Authentication Routes
 
-**API Endpoints**
-  **Authentication Routes**
+### 1. **Register User**
+   - **Endpoint**: `POST /api/auth/register`
+   - **Description**: Register a new user with a username, email, and password.
+   - **Request Body**:
+     ```json
+     {
+       "username": "john_doe",
+       "email": "john@example.com",
+       "password": "password123",
+       "role": "User"
+     }
+     ```
 
-**Register User**
-Endpoint: POST /api/auth/register
-Description: Register a new user with a username, email, and password.
-Request Body:
-json
-{
-  "username": "john_doe",
-  "email": "john@example.com",
-  "password": "password123",
-  "role": "User"
-}
-**Login**
-Endpoint: POST /api/auth/login
-Description: Login and receive a JWT token.
-Request Body:
-json
+### 2. **Login**
+   - **Endpoint**: `POST /api/auth/login`
+   - **Description**: Login and receive a JWT token.
+   - **Request Body**:
+     ```json
+     {
+       "email": "john@example.com",
+       "password": "password123"
+     }
+     ```
 
-{
-  "email": "john@example.com",
-  "password": "password123"
-}
-**Logout**
-Endpoint: POST /api/auth/logout
-Description: Logout and invalidate the session.
+### 3. **Logout**
+   - **Endpoint**: `POST /api/auth/logout`
+   - **Description**: Logout and invalidate the session.
 
-**User Management Routes**
-**Get All Users**
-Endpoint: GET /api/users
-Description: Get all users (Admin only).
-Headers: Authorization: Bearer <token>
+---
 
-**Update User Role**
-Endpoint: PUT /api/users/:id/role
-Description: Update the role of an existing user (Admin only).
-Request Body:
-json
+# User Management Routes
 
-{
-  "role": "Moderator"
-}
-Role Management Routes
-Create Role
+### 1. **Get All Users**
+   - **Endpoint**: `GET /api/users`
+   - **Description**: Get all users (Admin only).
+   - **Headers**:
+     ```json
+     {
+       "Authorization": "Bearer <token>"
+     }
+     ```
 
-**Endpoint: POST /api/roles**
-Description: Create a new role (Admin only).
-Request Body:
-json
+### 2. **Update User Role**
+   - **Endpoint**: `PUT /api/users/:id/role`
+   - **Description**: Update the role of an existing user (Admin only).
+   - **Request Body**:
+     ```json
+     {
+       "role": "Moderator"
+     }
+     ```
 
-{
-  "name": "Manager",
-  "permissions": ["create", "read", "update"]
-}
-**Get All Roles**
-Endpoint: GET /api/roles
-Description: Get a list of all roles.
+---
+
+# Role Management Routes
+
+### 1. **Create Role**
+   - **Endpoint**: `POST /api/roles`
+   - **Description**: Create a new role (Admin only).
+   - **Request Body**:
+     ```json
+     {
+       "name": "Manager",
+       "permissions": ["create", "read", "update"]
+     }
+     ```
+
+### 2. **Get All Roles**
+   - **Endpoint**: `GET /api/roles`
+   - **Description**: Get a list of all roles.
+
 
 **Role-Based Access Control (RBAC) Implementation**
 The system defines the following roles:
