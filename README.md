@@ -30,15 +30,7 @@ Technologies Used
 **Environment Variables**: dotenv
 **Middleware**: Custom middleware for authentication (protect) and authorization (authorizeRoles)
 
-Project Setup
-1. Clone the Repository
-git clone https://github.com/your-username/rbac-system.git
-cd rbac-system
-2. Install Dependencies
-Make sure you have Node.js installed. Then, install the necessary dependencies:
-npm install
-3. Configure Environment Variables
-Create a .env file in the root directory and configure your environment variables:
+
 
 env code
 
